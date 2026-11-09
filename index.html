@@ -1,0 +1,792 @@
+<title>麺屋 風雅</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* レイアウト: 暖簾のように朱(黒)と和紙(生成り)の帯を交互に重ねる、一本道の縦スクロール構成 */
+:root{
+  --bg:#f3ead9;
+  --bg-deep:#1a1613;
+  --card:#fbf5ea;
+  --card-deep:#241d18;
+  --fg:#2a211c;
+  --fg-on-deep:#ece2d0;
+  --muted:#6b5d4f;
+  --muted-on-deep:#a8977f;
+  --accent:#8c1f28;
+  --accent-bright:#c23b2e;
+  --gold:#a9802f;
+  --border:rgba(42,33,28,.16);
+  --border-on-deep:rgba(236,226,208,.16);
+  --font-display:"Yuji Syuku",serif;
+  --font-head:"Shippori Mincho",serif;
+  --font-body:"Noto Sans JP",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1d1712;
+    --bg-deep:#0c0a08;
+    --card:#2a2119;
+    --card-deep:#1f1813;
+    --fg:#ece2d0;
+    --fg-on-deep:#ece2d0;
+    --muted:#b8a890;
+    --muted-on-deep:#a8977f;
+    --accent:#e0665c;
+    --accent-bright:#e88079;
+    --gold:#d4af6a;
+    --border:rgba(236,226,208,.14);
+    --border-on-deep:rgba(236,226,208,.14);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1d1712;
+  --bg-deep:#0c0a08;
+  --card:#2a2119;
+  --card-deep:#1f1813;
+  --fg:#ece2d0;
+  --fg-on-deep:#ece2d0;
+  --muted:#b8a890;
+  --muted-on-deep:#a8977f;
+  --accent:#e0665c;
+  --accent-bright:#e88079;
+  --gold:#d4af6a;
+  --border:rgba(236,226,208,.14);
+  --border-on-deep:rgba(236,226,208,.14);
+  color-scheme:dark;
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+  html{scroll-behavior:auto!important;}
+}
+*{box-sizing:border-box;}
+h1,h2,h3,p,ul,figure,table{margin:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-body);
+  font-weight:400;
+  line-height:1.8;
+}
+img,svg{max-width:100%;}
+a{color:inherit;}
+.wrap{
+  max-width:1080px;
+  margin-inline:auto;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+}
+.eyebrow{
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:.6rem;
+}
+.eyebrow-deep{color:var(--gold);}
+.head{
+  font-family:var(--font-head);
+  font-weight:600;
+  font-size:clamp(1.7rem,4.5vw,2.4rem);
+  text-wrap:balance;
+  color:var(--fg);
+  letter-spacing:.02em;
+}
+.head-deep{color:var(--gold);}
+.lead{
+  margin-top:1.1rem;
+  max-width:36em;
+  color:var(--fg);
+  font-size:1.02rem;
+}
+.lead-deep{color:var(--fg-on-deep);}
+
+/* ===== header ===== */
+.site-header{
+  position:sticky;
+  top:env(safe-area-inset-top,0px);
+  z-index:20;
+  background:var(--bg-deep);
+  border-bottom:1px solid var(--border-on-deep);
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0 0 auto;
+  height:env(safe-area-inset-top,0px);
+  z-index:10;
+  background:var(--bg-deep);
+}
+.header-inner{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  padding-block:.85rem;
+}
+.brand{
+  font-family:var(--font-head);
+  font-size:1.15rem;
+  font-weight:600;
+  color:var(--gold);
+  text-decoration:none;
+  letter-spacing:.03em;
+}
+.nav{display:none;gap:1.6rem;}
+.nav a{
+  color:var(--fg-on-deep);
+  text-decoration:none;
+  font-size:.92rem;
+  padding-bottom:.3rem;
+  border-bottom:1px solid transparent;
+}
+.nav a:hover,.nav a:focus-visible{color:var(--gold);border-color:var(--gold);}
+.nav.open{
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+  width:100%;
+  padding-top:.9rem;
+}
+.nav-toggle{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  width:30px;
+  height:24px;
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+}
+.nav-toggle span{display:block;height:2px;background:var(--fg-on-deep);border-radius:1px;}
+@media (min-width:760px){
+  .nav{display:flex;}
+  .nav-toggle{display:none;}
+}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+/* ===== hero ===== */
+.hero{
+  background:
+    radial-gradient(circle at 1px 1px, rgba(169,128,47,.14) 1px, transparent 0) 0 0/20px 20px,
+    var(--bg-deep);
+}
+.hero-inner{
+  padding-block:clamp(3rem,8vw,5.5rem) clamp(2.5rem,6vw,4rem);
+  text-align:center;
+}
+.eyebrow-hero{color:var(--gold);}
+.brush{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(2.6rem,10vw,4.6rem);
+  color:var(--gold);
+  line-height:1.15;
+  margin-top:.3rem;
+}
+.seal{
+  width:56px;
+  height:56px;
+  margin:.6rem auto 0;
+  display:block;
+  transform:rotate(-7deg);
+}
+.seal .seal-outer{fill:var(--accent-bright);}
+.seal .seal-inner{fill:none;stroke:var(--fg-on-deep);stroke-width:1.5;}
+.seal text{fill:var(--fg-on-deep);font-family:var(--font-head);font-size:26px;font-weight:700;}
+.tagline{
+  margin-top:1.1rem;
+  font-family:var(--font-head);
+  font-size:1.15rem;
+  color:var(--fg-on-deep);
+}
+.hero-desc{
+  margin-top:.9rem;
+  color:var(--muted-on-deep);
+  font-size:.96rem;
+  max-width:30em;
+  margin-inline:auto;
+}
+.hero-cta{
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:1.8rem;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.8rem 1.7rem;
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:.92rem;
+  letter-spacing:.02em;
+  border:1.5px solid transparent;
+  border-radius:2px;
+  text-decoration:none;
+  transition:transform .15s ease,background .15s ease,color .15s ease,border-color .15s ease;
+}
+.btn:hover{transform:translateY(-1px);}
+.btn-primary{background:var(--accent-bright);color:var(--fg-on-deep);}
+.btn-ghost{background:transparent;color:var(--fg-on-deep);border-color:var(--border-on-deep);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+.hero-art{
+  display:block;
+  width:min(240px,62vw);
+  height:auto;
+  margin:2.2rem auto 0;
+}
+.hero-art .steam path{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;opacity:.85;transform-origin:center;animation:steamDrift 4s ease-in-out infinite;}
+.hero-art .steam path:nth-child(2){animation-delay:.6s;}
+.hero-art .steam path:nth-child(3){animation-delay:1.2s;}
+@keyframes steamDrift{
+  0%,100%{transform:translateY(0) scaleY(1);opacity:.75;}
+  50%{transform:translateY(-4px) scaleY(1.05);opacity:1;}
+}
+.hero-art .bowl-rim{fill:var(--gold);}
+.hero-art .bowl-body{fill:var(--card-deep);stroke:var(--gold);stroke-width:2;}
+.hero-art .noodle{fill:none;stroke:var(--fg-on-deep);stroke-width:3;stroke-linecap:round;opacity:.9;}
+.hero-art .topping-egg{fill:var(--fg-on-deep);}
+.hero-art .topping-yolk{fill:var(--accent-bright);}
+.hero-art .topping-chashu{fill:var(--accent-bright);}
+.hero-art .topping-scallion path{stroke:#7a8f5e;stroke-width:3;stroke-linecap:round;fill:none;}
+
+/* ===== wave divider ===== */
+.wave-divider{line-height:0;background:var(--bg-deep);}
+.wave-divider svg{display:block;width:100%;height:18px;}
+.wave-divider--paper{background:var(--bg);}
+.wave-line{fill:none;stroke:var(--gold);stroke-width:1.4;}
+.wave-line-soft{opacity:.5;}
+
+/* ===== story ===== */
+.story{background:var(--bg);}
+.story .wrap{padding-block:clamp(3rem,7vw,5rem);}
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.8rem;
+  margin-top:2.4rem;
+}
+.feature{
+  padding:1.6rem 1.4rem;
+  background:var(--card);
+  border:1px solid var(--border);
+}
+.feature-icon-wrap{
+  width:56px;height:56px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);
+  margin-bottom:1rem;
+}
+.feature-icon{width:30px;height:30px;stroke:var(--accent);fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;}
+.feature h3{
+  font-family:var(--font-head);
+  font-size:1.05rem;
+  font-weight:600;
+  margin-bottom:.5rem;
+}
+.feature p{color:var(--muted);font-size:.92rem;}
+
+/* ===== menu ===== */
+.menu{background:var(--bg-deep);}
+.menu .wrap{padding-block:clamp(3rem,7vw,5rem);}
+.menu-note{color:var(--muted-on-deep);font-size:.85rem;margin-top:.6rem;}
+.group-title{
+  font-family:var(--font-head);
+  color:var(--gold);
+  font-size:1.05rem;
+  font-weight:600;
+  margin-top:2.2rem;
+  padding-bottom:.5rem;
+  border-bottom:1px solid var(--border-on-deep);
+}
+.menu-list{list-style:none;padding:0;}
+.menu-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:1.2rem;
+  padding-block:1rem;
+  border-bottom:1px solid var(--border-on-deep);
+}
+.m-main{display:flex;flex-direction:column;gap:.3rem;min-width:0;}
+.m-name{font-family:var(--font-head);font-size:1.02rem;color:var(--fg-on-deep);display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
+.m-desc{color:var(--muted-on-deep);font-size:.85rem;}
+.m-price{
+  font-variant-numeric:tabular-nums;
+  font-weight:700;
+  color:var(--gold);
+  white-space:nowrap;
+  font-size:1.02rem;
+}
+.badge{
+  background:var(--accent-bright);
+  color:var(--fg-on-deep);
+  font-size:.65rem;
+  font-weight:700;
+  letter-spacing:.05em;
+  padding:.2rem .5rem;
+  border-radius:2px;
+}
+.menu-extra{margin-top:2.4rem;padding:1.4rem;background:var(--card-deep);border:1px solid var(--border-on-deep);}
+.extra-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:1.2rem 2rem;}
+.extra-list li{color:var(--fg-on-deep);font-size:.92rem;display:flex;gap:.5rem;}
+.extra-list span{color:var(--gold);font-variant-numeric:tabular-nums;font-weight:700;}
+
+/* ===== gallery ===== */
+.gallery{background:var(--bg);}
+.gallery .wrap{padding-block:clamp(3rem,7vw,5rem);}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:1.6rem;
+  margin-top:2.4rem;
+}
+.gallery-grid figure{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:1.1rem;
+  transition:transform .2s ease;
+}
+.gallery-grid figure:hover{transform:translateY(-3px);}
+.gallery-art{display:block;width:100%;height:auto;}
+.gallery-grid figcaption{
+  margin-top:.9rem;
+  text-align:center;
+  font-family:var(--font-head);
+  font-size:.95rem;
+  color:var(--fg);
+}
+.g-bowl-outer{fill:var(--gold);}
+.g-bowl-soup{fill:var(--card-deep);}
+.g-noodle{fill:none;stroke:var(--fg-on-deep);stroke-width:3;stroke-linecap:round;}
+.g-chashu{fill:var(--accent-bright);}
+.g-egg{fill:var(--fg-on-deep);}
+.g-yolk{fill:var(--accent-bright);}
+.g-scallion path{stroke:#7a8f5e;stroke-width:3;stroke-linecap:round;fill:none;}
+.g-door{fill:var(--card-deep);stroke:var(--gold);stroke-width:2;}
+.g-noren-bar{fill:var(--gold);}
+.g-noren{fill:var(--accent);}
+.g-noren-text{fill:var(--fg-on-deep);font-family:var(--font-head);font-size:18px;}
+.g-lantern-body{fill:var(--accent-bright);stroke:var(--gold);stroke-width:1.5;}
+.g-lantern-line{stroke:var(--gold);stroke-width:1.5;}
+.g-counter-top{fill:var(--gold);}
+.g-counter-base{fill:var(--card-deep);}
+.g-stool-seat{fill:none;stroke:var(--accent);stroke-width:3;}
+.g-stool-leg{fill:var(--accent);}
+.g-bowl-top{fill:var(--accent-bright);}
+.g-steam path{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;opacity:.8;}
+.g-pot{fill:var(--card-deep);stroke:var(--gold);stroke-width:2;}
+.g-pot-rim{fill:var(--gold);}
+.g-handle{fill:none;stroke:var(--gold);stroke-width:4;}
+.g-ladle-stick{stroke:var(--accent);stroke-width:4;stroke-linecap:round;fill:none;}
+.g-ladle-head{fill:var(--accent);}
+.g-stove{fill:var(--accent);}
+
+/* ===== access ===== */
+.access{background:var(--bg-deep);}
+.access .wrap{padding-block:clamp(3rem,7vw,5rem);}
+.access-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:2rem;
+  margin-top:2.2rem;
+}
+@media (min-width:680px){
+  .access-grid{grid-template-columns:1.1fr 1fr;}
+}
+.hours{width:100%;border-collapse:collapse;background:var(--card-deep);border:1px solid var(--border-on-deep);}
+.hours th,.hours td{
+  text-align:left;
+  padding:.9rem 1.1rem;
+  border-bottom:1px solid var(--border-on-deep);
+  font-size:.92rem;
+}
+.hours tr:last-child th,.hours tr:last-child td{border-bottom:none;}
+.hours th{color:var(--gold);font-family:var(--font-head);font-weight:600;white-space:nowrap;}
+.hours td{color:var(--fg-on-deep);font-variant-numeric:tabular-nums;}
+.access-info{
+  background:var(--card-deep);
+  border:1px solid var(--border-on-deep);
+  padding:1.3rem;
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+}
+.access-info p{color:var(--fg-on-deep);font-size:.92rem;}
+.access-info .label{display:block;color:var(--gold);font-size:.72rem;letter-spacing:.14em;margin-bottom:.3rem;}
+
+/* ===== footer ===== */
+.site-footer{background:var(--bg-deep);border-top:1px solid var(--gold);}
+.footer-inner{
+  padding-block:2.4rem;
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+}
+.footer-brand{font-family:var(--font-head);color:var(--gold);font-size:1.1rem;}
+.footer-inner p{color:var(--muted-on-deep);font-size:.85rem;}
+.copyright{margin-top:.8rem;font-size:.75rem;color:var(--muted-on-deep);}
+</style>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">麺屋 風雅</a>
+    <nav class="nav" id="nav">
+      <a href="#story">こだわり</a>
+      <a href="#menu">メニュー</a>
+      <a href="#gallery">ギャラリー</a>
+      <a href="#access">アクセス</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" id="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow eyebrow-hero">RAMEN SHOP</p>
+      <h1 class="brush">麺屋 風雅</h1>
+      <svg class="seal" viewBox="0 0 70 70" aria-hidden="true" focusable="false">
+        <rect class="seal-outer" x="4" y="4" width="62" height="62" rx="6"/>
+        <rect class="seal-inner" x="11" y="11" width="48" height="48" rx="3"/>
+        <text x="35" y="45" text-anchor="middle">雅</text>
+      </svg>
+      <p class="tagline">一杯に込める、出汁と手仕事</p>
+      <p class="hero-desc">昭和四十三年の創業より、鶏と煮干しの出汁を引き続けています。<br>変わらぬ味を、変わらぬ一杯で。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#menu">メニューを見る</a>
+        <a class="btn btn-ghost" href="#access">アクセス・営業時間</a>
+      </div>
+      <svg class="hero-art" viewBox="0 0 220 190" aria-hidden="true" focusable="false">
+        <g class="steam">
+          <path d="M88 58 C80 46 96 40 88 26"/>
+          <path d="M110 53 C102 38 120 34 112 16"/>
+          <path d="M132 60 C126 48 142 44 134 30"/>
+        </g>
+        <ellipse class="bowl-rim" cx="110" cy="122" rx="78" ry="20"/>
+        <path class="bowl-body" d="M32 122 C32 122 44 172 110 172 C176 172 188 122 188 122 Z"/>
+        <path class="noodle" d="M54 118 C68 106 78 130 92 118 C106 106 116 130 130 118 C144 106 154 130 166 118"/>
+        <circle class="topping-egg" cx="74" cy="110" r="13"/>
+        <circle class="topping-yolk" cx="74" cy="110" r="5"/>
+        <rect class="topping-chashu" x="126" y="98" width="34" height="16" rx="3"/>
+        <g class="topping-scallion">
+          <path d="M146 102 l10 -4"/>
+          <path d="M150 108 l11 -3"/>
+          <path d="M148 114 l10 -1"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <div class="wave-divider" aria-hidden="true">
+    <svg viewBox="0 0 280 18" preserveAspectRatio="none">
+      <defs>
+        <pattern id="wave1" width="28" height="18" patternUnits="userSpaceOnUse">
+          <path class="wave-line" d="M0 18 Q7 2 14 18 Q21 2 28 18"/>
+          <path class="wave-line wave-line-soft" d="M0 12 Q7 0 14 12 Q21 0 28 12"/>
+        </pattern>
+      </defs>
+      <rect width="280" height="18" fill="url(#wave1)"/>
+    </svg>
+  </div>
+
+  <section class="story" id="story">
+    <div class="wrap">
+      <p class="eyebrow">OUR CRAFT</p>
+      <h2 class="head">こだわり</h2>
+      <p class="lead">1968年(昭和43年)、初代が屋台から始めた一軒のラーメン屋。鶏ガラと煮干しを一晩かけて引く出汁、毎朝手打ちする麺、炭火でじっくり炙るチャーシュー。三代にわたり守り続けてきた味を、今日も変わらぬ一杯でお届けします。</p>
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <path d="M10 20h28l-3 16a4 4 0 0 1-4 3H17a4 4 0 0 1-4-3z"/>
+              <path d="M6 20h36"/>
+              <path d="M14 20c0-6 4-10 10-10s10 4 10 10"/>
+            </svg>
+          </div>
+          <h3>スープ</h3>
+          <p>鶏ガラと煮干し、昆布を合わせ、八時間かけてじっくりと引く合わせ出汁。</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="24" r="18"/>
+              <path d="M14 20c4-6 8 2 12-4s8 2 8-4"/>
+              <path d="M14 28c4-6 8 2 12-4s8 2 8-4"/>
+            </svg>
+          </div>
+          <h3>麺</h3>
+          <p>国産小麦粉を使い、毎朝店主が手打ちする自家製麺。</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="24" r="18"/>
+              <path d="M24 24c0-4 4-6 6-3s0 7-4 7-6-5-3-9 8-4 9 1"/>
+            </svg>
+          </div>
+          <h3>チャーシュー</h3>
+          <p>厳選した豚肩ロースを炭火で炙り、低温でじっくり火を入れています。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider wave-divider--paper" aria-hidden="true">
+    <svg viewBox="0 0 280 18" preserveAspectRatio="none">
+      <defs>
+        <pattern id="wave2" width="28" height="18" patternUnits="userSpaceOnUse">
+          <path class="wave-line" d="M0 18 Q7 2 14 18 Q21 2 28 18"/>
+          <path class="wave-line wave-line-soft" d="M0 12 Q7 0 14 12 Q21 0 28 12"/>
+        </pattern>
+      </defs>
+      <rect width="280" height="18" fill="url(#wave2)"/>
+    </svg>
+  </div>
+
+  <section class="menu" id="menu">
+    <div class="wrap">
+      <p class="eyebrow eyebrow-deep">MENU</p>
+      <h2 class="head head-deep">メニュー・価格表</h2>
+      <p class="menu-note">※表示価格はすべて税込です</p>
+
+      <h3 class="group-title">らーめん</h3>
+      <ul class="menu-list">
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">風雅の醤油ラーメン<span class="badge">一番人気</span></span>
+            <span class="m-desc">鶏と煮干しの合わせ出汁、自家製醤油だれ</span>
+          </div>
+          <span class="m-price">¥850</span>
+        </li>
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">味噌ラーメン</span>
+            <span class="m-desc">三種味噌をブレンドした濃厚スープ</span>
+          </div>
+          <span class="m-price">¥900</span>
+        </li>
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">塩ラーメン</span>
+            <span class="m-desc">昆布と鶏の清湯、淡麗な塩味</span>
+          </div>
+          <span class="m-price">¥850</span>
+        </li>
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">特製つけ麺</span>
+            <span class="m-desc">魚介と豚骨を合わせた濃厚つけ汁</span>
+          </div>
+          <span class="m-price">¥980</span>
+        </li>
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">チャーシュー麺</span>
+            <span class="m-desc">厚切り自家製チャーシュー3枚のせ</span>
+          </div>
+          <span class="m-price">¥1,150</span>
+        </li>
+      </ul>
+
+      <h3 class="group-title">一品・サイド</h3>
+      <ul class="menu-list">
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">餃子(6個)</span>
+          </div>
+          <span class="m-price">¥420</span>
+        </li>
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">炙りチャーシュー丼(ハーフ)</span>
+          </div>
+          <span class="m-price">¥380</span>
+        </li>
+        <li class="menu-item">
+          <div class="m-main">
+            <span class="m-name">半炒飯</span>
+          </div>
+          <span class="m-price">¥350</span>
+        </li>
+      </ul>
+
+      <div class="menu-extra">
+        <h3 class="group-title" style="margin-top:0;border-bottom:none;padding-bottom:0;">トッピング</h3>
+        <ul class="extra-list">
+          <li>味付け玉子 <span>+¥100</span></li>
+          <li>追い飯 <span>+¥150</span></li>
+          <li>麺大盛り <span>+¥100</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider" aria-hidden="true">
+    <svg viewBox="0 0 280 18" preserveAspectRatio="none">
+      <defs>
+        <pattern id="wave3" width="28" height="18" patternUnits="userSpaceOnUse">
+          <path class="wave-line" d="M0 18 Q7 2 14 18 Q21 2 28 18"/>
+          <path class="wave-line wave-line-soft" d="M0 12 Q7 0 14 12 Q21 0 28 12"/>
+        </pattern>
+      </defs>
+      <rect width="280" height="18" fill="url(#wave3)"/>
+    </svg>
+  </div>
+
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <p class="eyebrow">GALLERY</p>
+      <h2 class="head">店舗ギャラリー</h2>
+      <p class="lead">実店舗の写真の代わりに、お店の雰囲気をイラストでご紹介します。</p>
+      <div class="gallery-grid">
+        <figure>
+          <svg class="gallery-art" viewBox="0 0 240 180" aria-hidden="true" focusable="false">
+            <circle class="g-bowl-outer" cx="120" cy="90" r="78"/>
+            <circle class="g-bowl-soup" cx="120" cy="90" r="64"/>
+            <path class="g-noodle" d="M70 92c10-14 18 10 28-4s18 10 28-4 18 10 28-4"/>
+            <rect class="g-chashu" x="100" y="58" width="40" height="18" rx="4"/>
+            <circle class="g-egg" cx="86" cy="118" r="16"/>
+            <circle class="g-yolk" cx="86" cy="118" r="6"/>
+            <g class="g-scallion">
+              <path d="M150 60l10-4"/>
+              <path d="M154 66l11-3"/>
+              <path d="M152 72l10-1"/>
+            </g>
+          </svg>
+          <figcaption>自慢の一杯</figcaption>
+        </figure>
+        <figure>
+          <svg class="gallery-art" viewBox="0 0 240 180" aria-hidden="true" focusable="false">
+            <rect class="g-door" x="30" y="20" width="180" height="150"/>
+            <rect class="g-noren-bar" x="40" y="30" width="160" height="8"/>
+            <path class="g-noren" d="M50 38h30v70l-15 14-15-14z"/>
+            <path class="g-noren" d="M90 38h30v80l-15 12-15-12z"/>
+            <path class="g-noren" d="M130 38h30v80l-15 12-15-12z"/>
+            <path class="g-noren" d="M170 38h30v70l-15 14-15-14z"/>
+            <text class="g-noren-text" x="105" y="72" text-anchor="middle">風</text>
+            <text class="g-noren-text" x="145" y="72" text-anchor="middle">雅</text>
+            <g>
+              <ellipse class="g-lantern-body" cx="205" cy="58" rx="13" ry="17"/>
+              <line class="g-lantern-line" x1="205" y1="41" x2="205" y2="30"/>
+            </g>
+          </svg>
+          <figcaption>暖簾をくぐって</figcaption>
+        </figure>
+        <figure>
+          <svg class="gallery-art" viewBox="0 0 240 180" aria-hidden="true" focusable="false">
+            <rect class="g-counter-top" x="20" y="70" width="200" height="14" rx="2"/>
+            <rect class="g-counter-base" x="30" y="84" width="180" height="40"/>
+            <g>
+              <circle class="g-stool-seat" cx="50" cy="150" r="12"/><rect class="g-stool-leg" x="47" y="150" width="6" height="20"/>
+              <circle class="g-stool-seat" cx="92" cy="150" r="12"/><rect class="g-stool-leg" x="89" y="150" width="6" height="20"/>
+              <circle class="g-stool-seat" cx="134" cy="150" r="12"/><rect class="g-stool-leg" x="131" y="150" width="6" height="20"/>
+              <circle class="g-stool-seat" cx="176" cy="150" r="12"/><rect class="g-stool-leg" x="173" y="150" width="6" height="20"/>
+            </g>
+            <g>
+              <circle class="g-bowl-top" cx="60" cy="68" r="8"/>
+              <circle class="g-bowl-top" cx="120" cy="68" r="8"/>
+              <circle class="g-bowl-top" cx="180" cy="68" r="8"/>
+            </g>
+          </svg>
+          <figcaption>カウンター席</figcaption>
+        </figure>
+        <figure>
+          <svg class="gallery-art" viewBox="0 0 240 180" aria-hidden="true" focusable="false">
+            <g class="g-steam">
+              <path d="M108 50c-8-10 6-14-2-26"/>
+              <path d="M130 48c-8-10 6-16-2-28"/>
+            </g>
+            <path class="g-pot" d="M70 70h100v48a50 22 0 0 1-100 0z"/>
+            <rect class="g-pot-rim" x="64" y="64" width="112" height="12" rx="4"/>
+            <path class="g-handle" d="M58 78c-10 0-10 20 0 20"/>
+            <path class="g-handle" d="M182 78c10 0 10 20 0 20"/>
+            <path class="g-ladle-stick" d="M188 110l20 14"/>
+            <circle class="g-ladle-head" cx="190" cy="108" r="8"/>
+            <rect class="g-stove" x="60" y="150" width="120" height="14" rx="3"/>
+          </svg>
+          <figcaption>八時間寸胴で炊く出汁</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider wave-divider--paper" aria-hidden="true">
+    <svg viewBox="0 0 280 18" preserveAspectRatio="none">
+      <defs>
+        <pattern id="wave4" width="28" height="18" patternUnits="userSpaceOnUse">
+          <path class="wave-line" d="M0 18 Q7 2 14 18 Q21 2 28 18"/>
+          <path class="wave-line wave-line-soft" d="M0 12 Q7 0 14 12 Q21 0 28 12"/>
+        </pattern>
+      </defs>
+      <rect width="280" height="18" fill="url(#wave4)"/>
+    </svg>
+  </div>
+
+  <section class="access" id="access">
+    <div class="wrap">
+      <p class="eyebrow eyebrow-deep">HOURS &amp; ACCESS</p>
+      <h2 class="head head-deep">営業時間・アクセス</h2>
+      <div class="access-grid">
+        <table class="hours">
+          <tr><th>平日(月〜金)</th><td>11:30-15:00<br>17:30-21:00(L.O. 20:30)</td></tr>
+          <tr><th>土日祝</th><td>11:00-21:00 通し営業<br>(L.O. 20:30)</td></tr>
+          <tr><th>定休日</th><td>水曜日</td></tr>
+        </table>
+        <div class="access-info">
+          <p><span class="label">所在地</span>〒100-0003<br>東京都○○区○○町1-2-3 風雅ビル1F</p>
+          <p><span class="label">最寄り</span>○○駅 南口より徒歩5分</p>
+          <p><span class="label">駐車場</span>店舗横に2台分あり</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-brand">麺屋 風雅</p>
+    <p>〒100-0003 東京都○○区○○町1-2-3 風雅ビル1F</p>
+    <p>TEL 03-1234-5678</p>
+    <p class="copyright">© 2026 麺屋 風雅</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('nav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function(){
+    var isOpen = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  Array.prototype.forEach.call(nav.querySelectorAll('a'), function(link){
+    link.addEventListener('click', function(){
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+  window.addEventListener('resize', function(){
+    if (window.innerWidth >= 760) {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+</script>
